@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Addidi Royal Technology | Solutions High-Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            scroll-behavior: smooth;
+        }
+        /* Navigation */
+        .navbar {
+            background: #0f2b3d;
+            backdrop-filter: blur(0px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #facc15;
+            letter-spacing: -0.5px;
+        }
+        .logo p {
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .nav-links button {
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #e2e8f0;
+            transition: 0.2s;
+            font-family: inherit;
+            padding: 0.4rem 0;
+        }
+        .nav-links button:hover, .nav-links button.active {
+            color: #facc15;
+            border-bottom: 2px solid #facc15;
+        }
+        /* Sections */
+        .section {
+            display: none;
+            padding: 3rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            animation: fade 0.3s ease;
+        }
+        .active-section {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(8px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        /* Cartes services */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .service-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .service-card i {
+            font-size: 2.5rem;
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+        }
+        .btn {
+            background-color: #0f2b3d;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-warning {
+            background-color: #facc15;
+            color: #0f172a;
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #0f2b3d;
+            color: #0f2b3d;
+        }
+        footer {
+            background: #0f2b3d;
+            color: #cbd5e6;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            margin-top: 2rem;
+        }
+        /* Formulaire */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            font-family: inherit;
+        }
+        .forum-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-left: 4px solid #facc15;
+        }
+        .access-code-area {
+            background: #eef2ff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .training-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .badge {
+            background: #facc15;
+            color: #0f172a;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        /* Style Admin Modale */
+        .admin-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+        .admin-modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        /* Liens de contact */
+        .contact-link {
+            color: #0f172a;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .contact-link:hover {
+            color: #d97706;
+            text-decoration: underline;
+        }
+        @media (max-width: 800px) {
+            .nav-container { flex-direction: column; gap: 1rem;}
+            .nav-links { justify-content: center; gap: 1rem;}
+        }
+        .contact-info i { width: 30px; color: #facc15;}
+        hr { margin: 1rem 0;}
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <h1>ARTECH</h1>
+            <p>Addidi Royal Technology</p>
+        </div>
+        <div class="nav-links">
+            <button data-section="home" class="nav-btn active">Accueil</button>
+            <button data-section="services" class="nav-btn">Services</button>
+            <button data-section="training" class="nav-btn">Formation en ligne</button>
+            <button data-section="forum" class="nav-btn">Forum</button>
+            <button data-section="contact" class="nav-btn">Contact</button>
+        </div>
+    </div>
+</div>
+
+<section id="home" class="section active-section">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2.8rem; color:#0f2b3d;">Addidi Royal Technology</h1>
+        <p style="font-size: 1.2rem; color:#334155;">Innovation · Expertise · Formation de pointe</p>
+        <div style="margin: 1rem 0;">
+            <span class="badge">Programmation C / Python / Assembleur</span>
+            <span class="badge">Réparation mobile & smart TV</span>
+            <span class="badge">Déblocage iPhone/Android/Tchoronco</span>
+            <span class="badge">Domotique & CCTV</span>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="1.png" alt="Artech Innovation" style="max-width: 100%; width: 600px; border-radius: 1.5rem; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+    </div>
+
+    <div class="card-grid">
+        <div class="service-card"><i class="fas fa-microchip"></i><h3>Programmation bas niveau</h3><p>Expertise en C et Assembleur pour embarqué et systèmes critiques.</p></div>
+        <div class="service-card"><i class="fas fa-mobile-alt"></i><h3>Réparation & Déblocage</h3><p>Téléphones Android/iPhone/tchoronco, déverrouillage réseau/iCloud, logiciel.</p></div>
+        <div class="service-card"><i class="fas fa-home"></i><h3>Installation Domotique</h3><p>Automatisation résidentielle et intelligente.</p></div>
+        <div class="service-card"><i class="fas fa-desktop"></i><h3>Installation Système d'exploitation</h3><p>Windows xp,7,8,9,10,11 & Mac os.</p></div>
+        <div class="service-card"><i class="fas fa-video"></i><h3>Caméras de vidéo-surveillance</h3><p>Solutions de sécurité sur mesure.</p></div>
+        <div class="service-card"><i class="fas fa-chalkboard-user"></i><h3>Formation Professionnelle</h3><p>Certification dans nos domaines d'excellence.</p></div>
+        <div class="service-card"><i class="fas fa-handshake"></i><h3>Accompagnement & Conseil</h3><p>Nous formons et suivons les débutants et professionnels autour de la question avec un support technique et stratégique.</p></div>
+    </div>
+    <div style="margin-top: 2rem; background: #eef2ff; border-radius: 1rem; padding: 1.5rem; text-align: center;">
+        <i class="fas fa-user-tie fa-2x" style="color:#0f2b3d;"></i>
+        <h3>Kana Junior – PDG & Fondateur</h3>
+        <p>Expert en technologies avancées, visionnaire au service de l'innovation camerounaise.</p>
+        <p><strong><a href="http://www.artech.com" target="_blank" class="contact-link">www.artech.com</a></strong> | <a href="http://addidiroyaltechnology.com" target="_blank" class="contact-link">addidiroyaltechnology.com</a></p>
+    </div>
+</section>
+
+<section id="services" class="section">
+    <h2 style="font-size: 2rem;">Nos prestations expertes</h2>
+    <div class="card-grid">
+        <div class="service-card"><i class="fas fa-code"></i><h3>Programmation C, Python & Assembleur</h3><p>Développement firmware, drivers, optimisation mémoire.</p></div>
+        <div class="service-card"><i class="fas fa-tools"></i><h3>Réparation électronique</h3><p>Smartphones, tablettes, iPhone, composants SMD.</p></div>
+        <div class="service-card"><i class="fas fa-unlock-alt"></i><h3>Déblocage & programmation</h3><p>Déverrouillage réseau, iCloud, FRP, boxes et logiciels.</p></div>
+        <div class="service-card"><i class="fas fa-microchip"></i><h3>Domotique sur mesure</h3><p>Gestion éclairage, volets, sécurité, multiroom.</p></div>
+        <div class="service-card"><i class="fas fa-camera"></i><h3>Vidéosurveillance</h3><p>Caméras IP, analogique, enregistreurs, accès à distance.</p></div>
+        <div class="service-card"><i class="fas fa-graduation-cap"></i><h3>Formation professionnelle</h3><p>Stages pratiques, ateliers, certification.</p></div>
+    </div>
+</section>
+
+<section id="training" class="section">
+    <h2>🎓 Formation en ligne – Cyber Campus Artech</h2>
+    <p>Spécialisations : Programmation C/Assembleur, Réparation mobile, Déblocage avancé, Domotique, Caméras, accompagnement pro.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 1.5rem;">
+        
+        <div style="flex:1; background: white; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <i class="fas fa-edit fa-2x" style="color:#facc15;"></i>
+            <h3>📝 Pré-inscription</h3>
+            <p>Inscrivez-vous pour manifester votre intérêt. Après paiement de <strong>200$ USD</strong> via <i class="fab fa-whatsapp"></i> <a href="https://wa.me/237651471435" target="_blank" class="contact-link"><strong>+237 651471435</strong></a>, vous recevrez un <strong>code d'accès</strong> unique.</p>
+            <form id="preRegisterForm">
+                <div class="form-group"><input type="text" id="preName" placeholder="Nom complet" required></div>
+                <div class="form-group"><input type="email" id="preEmail" placeholder="Email" required></div>
+                <div class="form-group"><input type="tel" id="prePhone" placeholder="Téléphone" required></div>
+                <button type="submit" class="btn">S'enregistrer <i class="fas fa-arrow-right"></i></button>
+            </form>
+            <div id="preRegMessage" class="small" style="margin-top: 0.8rem; color:green; font-weight: bold;"></div>
+        </div>
+
+        <div style="flex:2; background: white; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <i class="fas fa-lock-open fa-2x" style="color:#facc15;"></i>
+            <h3>🔐 Accès plateforme e-learning</h3>
+            <div id="accessCodeBlock">
+                <div class="access-code-area">
+                    <label>Code d'accès (reçu après paiement 200$ → WhatsApp <a href="https://wa.me/237651471435" target="_blank" class="contact-link"><strong>+237 651471435</strong></a>)</label>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.6rem;">
+                        <input type="text" id="accessCodeInput" placeholder="Tapez le code reçu pour essayer" style="flex:1;">
+                        <button id="verifyCodeBtn" class="btn">Valider <i class="fas fa-key"></i></button>
+                    </div>
+                    <p style="font-size: 0.75rem; margin-top: 8px;">💡 Paiement effectué ? <a href="https://wa.me/237651471435" target="_blank" class="contact-link">Contactez le support WhatsApp</a> pour obtenir votre code personnel.</p>
+                </div>
+            </div>
+            
+            <div id="trainingContentArea" style="display: none;">
+                <div class="training-content">
+                    <h3 style="color: #0f2b3d; margin-bottom: 1rem;"><i class="fas fa-play-circle"></i> Contenu Premium débloqué ✅</h3>
+                    
+                    <div style="margin-bottom: 1.5rem; text-align: center;">
+                        <img src="2.png" alt="Miniature de formation" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 12px; border: 1px solid #cbd5e1;">
+                    </div>
+
+                    <div style="background: #0f2b3d; color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: #facc15;"><i class="fas fa-video"></i> Session 1 : Introduction Pratique</h4>
+                        <video id="studentVideoPlayer" controls width="100%" style="border-radius: 8px; background: #000; outline: none;">
+                            <source src="cours-intro.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <h4 style="margin-bottom: 0.8rem;"><i class="fas fa-book"></i> Supports de cours (PDF) :</h4>
+                    <ul style="list-style-type: none; line-height: 2;">
+                        <li style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 0.5rem 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                            <span><i class="fas fa-file-pdf" style="color:red; margin-right: 8px;"></i> Module 1: Programmation C pour embarqué</span>
+                            <a href="module1_c_embarque.pdf" download class="btn btn-warning" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;"><i class="fas fa-download"></i> PDF</a>
+                        </li>
+                        <li style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 0.5rem 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                            <span><i class="fas fa-file-pdf" style="color:red; margin-right: 8px;"></i> Module 2: Assembleur & Reverse Engineering</span>
+                            <a href="module2_assembleur.pdf" download class="btn btn-warning" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;"><i class="fas fa-download"></i> PDF</a>
+                        </li>
+                    </ul>
+                    <button id="resetTrainingAccess" class="btn-outline btn" style="margin-top: 1.5rem;">Révoquer l'accès</button>
+                </div>
+            </div>
+            <div id="wrongCodeMsg" style="color: red; margin-top: 0.5rem; font-weight: bold;"></div>
+        </div>
+    </div>
+</section>
+
+<section id="forum" class="section">
+    <h2><i class="fas fa-comments"></i> Forum d'entraide & discussions techniques</h2>
+    <p>Échangez avec la communauté Artech et les experts.</p>
+    <div style="margin: 1rem 0; background: white; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3>➕ Créer un nouveau sujet</h3>
+        <input type="text" id="newTopicTitle" placeholder="Titre du sujet" style="margin-bottom: 0.8rem; margin-top: 0.8rem;">
+        <textarea id="newTopicContent" rows="3" placeholder="Votre message..." style="margin-bottom: 0.8rem;"></textarea>
+        <input type="text" id="topicAuthor" placeholder="Votre pseudo" style="margin-bottom: 0.8rem;">
+        <button id="createTopicBtn" class="btn">Publier le sujet <i class="fas fa-paper-plane"></i></button>
+    </div>
+    
+    <div id="forumThreadsContainer">
+        <div class="forum-card">
+            <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Bienvenue sur le forum Artech !</h4>
+            <p>Posez vos questions sur la réparation, la programmation ou la domotique. La communauté vous répondra.</p>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Par: Administrateur</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <h2>📞 Contactez-nous</h2>
+    <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div>
+            <p style="margin-bottom: 0.5rem;"><i class="fas fa-envelope"></i> <strong>Email :</strong> <a href="mailto:addidiroyaltechnology@gmail.com" class="contact-link">addidiroyaltechnology@gmail.com</a></p>
+            <p style="margin-bottom: 0.5rem;"><i class="fas fa-phone-alt"></i> <strong>Téléphone :</strong> <a href="tel:+237690167246" class="contact-link">+237 690167246</a></p>
+            <p style="margin-bottom: 0.5rem;"><i class="fab fa-whatsapp"></i> <strong>WhatsApp Business :</strong> <a href="https://wa.me/237651471435" target="_blank" class="contact-link">+237 651471435</a></p>
+            <p style="margin-bottom: 0.5rem;"><i class="fab fa-telegram"></i> <strong>Telegram :</strong> <a href="https://t.me/237690167246" target="_blank" class="contact-link">Nous écrire sur Telegram</a></p>
+            <p style="margin-bottom: 0.5rem;"><i class="fas fa-globe"></i> <strong>Site :</strong> <a href="http://www.artech.com" target="_blank" class="contact-link">www.artech.com</a></p>
+            <p style="margin-bottom: 0.5rem;"><i class="fas fa-map-marker-alt"></i> <strong>Localisation :</strong> Douala / Yaoundé (Cameroun)</p>
+            <hr>
+            <p><strong>Addidi Royal Technology (Artech)</strong><br>Programmation, réparation, électronique, électricité domotique et formation professionnelle.</p>
+        </div>
+        
+        <div style="background: #eef2ff; border-radius: 1rem; padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem;">Envoyez-nous un message</h3>
+            <form action="mailto:addidiroyaltechnology@gmail.com" method="post" enctype="text/plain">
+                <div class="form-group"><input type="text" name="Nom" placeholder="Votre nom" required></div>
+                <div class="form-group"><input type="email" name="Email" placeholder="Votre email" required></div>
+                <div class="form-group"><textarea rows="4" name="Message" placeholder="Votre message..." required></textarea></div>
+                <button type="submit" class="btn">Envoyer le message <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section id="adminDashboard" class="section" style="background: #fff; border-radius: 2rem; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <h2 style="color: #0f2b3d;"><i class="fas fa-user-shield" style="color: #ef4444;"></i> Panneau d'administration Artech</h2>
+        <button id="logoutAdminBtn" class="btn btn-danger">Déconnexion <i class="fas fa-sign-out-alt"></i></button>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
+            <h3><i class="fas fa-users"></i> Étudiants Pré-inscrits</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 1rem; color:#64748b;">Personnes ayant rempli le formulaire de formation :</p>
+            <div id="adminStudentsList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                <p style="color: #64748b; font-style: italic;">Aucun étudiant enregistré pour le moment.</p>
+            </div>
+        </div>
+
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
+            <h3><i class="fas fa-cogs"></i> Configuration Sécurité Étudiants</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 0.8rem; color:#64748b;">Définissez ou modifiez le code d'accès requis pour débloquer les cours en ligne :</p>
+            <div class="form-group" style="display: flex; gap: 0.5rem;">
+                <input type="text" id="adminStudentCodeConfig" value="ARTECH-TEST" style="background:#fff;">
+                <button id="saveStudentCodeBtn" class="btn btn-warning" style="font-size:0.9rem;">Mettre à jour</button>
+            </div>
+            <hr>
+            <h3><i class="fas fa-comments"></i> Modération</h3>
+            <button id="clearForumBtn" class="btn btn-danger" style="font-size: 0.9rem; margin-top: 0.5rem; width: 100%; justify-content: center;"><i class="fas fa-trash"></i> Vider les messages du forum</button>
+        </div>
+    </div>
+
+    <div style="background: #f1f5f9; padding: 1.5rem; border-radius: 1.5rem; border: 1px solid #cbd5e1;">
+        <h3 style="color: #0f2b3d; margin-bottom: 0.5rem;"><i class="fas fa-graduation-cap"></i> Vue Super-Administrateur : Gestion des supports</h3>
+        <p style="font-size: 0.85rem; margin-bottom: 1.5rem; color:#475569;">Espace de contrôle exclusif pour prévisualiser vos fichiers médias (Vidéos & PDF) configurés sur le serveur.</p>
+        
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;">
+            <div style="background: #0f2b3d; color: white; padding: 1rem; border-radius: 12px;">
+                <h4 style="margin-bottom: 0.5rem; color: #facc15;"><i class="fas fa-video"></i> Contrôle du Lecteur Vidéo principal</h4>
+                <video id="adminVideoPlayer" controls width="100%" style="border-radius: 8px; background: #000; outline: none; max-height: 200px;">
+                    <source src="cours-intro.mp4" type="video/mp4">
+                </video>
+                <p style="font-size:0.75rem; color:#cbd5e1; margin-top:8px;"><i class="fas fa-link"></i> Fichier actif ciblé : <code style="color:#facc15;">cours-intro.mp4</code></p>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="margin-bottom: 0.8rem; color:#0f2b3d;"><i class="fas fa-folder-open"></i> Vérification des documents PDF</h4>
+                <div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.85rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:4px 8px; border-radius:6px;">
+                        <span>Module 1 (C)</span>
+                        <a href="module1_c_embarque.pdf" target="_blank" style="color:#0f2b3d; font-weight:bold;"><i class="fas fa-external-link-alt"></i> Tester</a>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:4px 8px; border-radius:6px;">
+                        <span>Module 2 (Asm)</span>
+                        <a href="module2_assembleur.pdf" target="_blank" style="color:#0f2b3d; font-weight:bold;"><i class="fas fa-external-link-alt"></i> Tester</a>
+                    </div>
+                </div>
+                <p style="font-size:0.75rem; color:#64748b; margin-top:12px; font-style:italic;"><i class="fas fa-info-circle"></i> Cliquez sur "Tester" pour vérifier si vos fichiers PDF locaux s'ouvrent correctement.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Addidi Royal Technology. Tous droits réservés. | <span id="openAdminModalBtn" style="cursor: pointer; color: #facc15; text-decoration: underline;"><i class="fas fa-lock"></i> Accès Admin</span></p>
+</footer>
+
+<div class="admin-modal" id="adminModal">
+    <div class="modal-content">
+        <h3 style="margin-bottom: 1rem; color: #0f2b3d;"><i class="fas fa-shield-alt"></i> Connexion Administration</h3>
+        <p style="font-size: 0.85rem; margin-bottom: 1rem; color: #64748b;">Entrez le code secret pour accéder au tableau de bord.</p>
+        <div class="form-group">
+            <input type="password" id="adminPasswordInput" placeholder="Code secret">
+        </div>
+        <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button id="closeAdminModalBtn" class="btn btn-outline">Annuler</button>
+            <button id="submitAdminPasswordBtn" class="btn btn-warning">Se connecter</button>
+        </div>
+        <div id="adminErrorMsg" style="color: red; font-weight: bold; margin-top: 0.5rem; font-size: 0.9rem;"></div>
+    </div>
+</div>
+
+<script>
+    let registeredStudents = [];
+    // Le code d'accès étudiant par défaut (peut maintenant être changé à la volée par l'admin)
+    let currentStudentAccessCode = "ARTECH-TEST";
+
+    // 1. GESTION DE LA NAVIGATION
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+
+    function changeSection(targetId) {
+        sections.forEach(s => s.classList.remove('active-section'));
+        navBtns.forEach(b => b.classList.remove('active'));
+        
+        const sectionEl = document.getElementById(targetId);
+        if(sectionEl) {
+            sectionEl.classList.add('active-section');
+        }
+        
+        const matchingBtn = document.querySelector(`[data-section="${targetId}"]`);
+        if(matchingBtn) {
+            matchingBtn.classList.add('active');
+        }
+        window.scrollTo(0, 0);
+    }
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            changeSection(btn.getAttribute('data-section'));
+        });
+    });
+
+    // 2. GESTION DU FORUM
+    document.getElementById('createTopicBtn').addEventListener('click', () => {
+        const title = document.getElementById('newTopicTitle').value;
+        const content = document.getElementById('newTopicContent').value;
+        const author = document.getElementById('topicAuthor').value || "Utilisateur Anonyme";
+        
+        if (title.trim() !== "" && content.trim() !== "") {
+            const container = document.getElementById('forumThreadsContainer');
+            const newCard = document.createElement('div');
+            newCard.className = 'forum-card';
+            newCard.innerHTML = `
+                <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">${title}</h4>
+                <p>${content}</p>
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Par: ${author} - À l'instant</p>
+            `;
+            container.prepend(newCard);
+            
+            document.getElementById('newTopicTitle').value = '';
+            document.getElementById('newTopicContent').value = '';
+            document.getElementById('topicAuthor').value = '';
+        } else {
+            alert("Veuillez remplir le titre et le contenu du message.");
+        }
+    });
+
+    // 3. GESTION DE L'ESPACE FORMATION (CÔTÉ ÉTUDIANT)
+    document.getElementById('preRegisterForm').addEventListener('submit', (e) => {
+        e.preventDefault(); 
+        const name = document.getElementById('preName').value;
+        const email = document.getElementById('preEmail').value;
+        const phone = document.getElementById('prePhone').value;
+
+        registeredStudents.push({ name, email, phone });
+        updateAdminStudentsList();
+
+        document.getElementById('preRegMessage').innerText = "✅ Demande envoyée ! Veuillez procéder au paiement sur WhatsApp pour recevoir votre code.";
+        e.target.reset(); 
+    });
+
+    document.getElementById('verifyCodeBtn').addEventListener('click', () => {
+        const code = document.getElementById('accessCodeInput').value;
+        // Vérification dynamique basée sur la variable modifiable
+        if (code.trim().toUpperCase() === currentStudentAccessCode.toUpperCase()) {
+            document.getElementById('trainingContentArea').style.display = 'block';
+            document.getElementById('wrongCodeMsg').innerText = "";
+            document.getElementById('accessCodeBlock').style.display = 'none'; 
+        } else {
+            document.getElementById('wrongCodeMsg').innerText = "❌ Code invalide ou expiré.";
+        }
+    });
+
+    document.getElementById('resetTrainingAccess').addEventListener('click', () => {
+        document.getElementById('trainingContentArea').style.display = 'none';
+        document.getElementById('accessCodeBlock').style.display = 'block';
+        document.getElementById('accessCodeInput').value = "";
+        document.getElementById('studentVideoPlayer').pause(); // Coupe la vidéo si l'étudiant quitte
+    });
+
+    // 4. PANNEAU DE CONTRÔLE ADMINISTRATEUR (`addidi98424751`)
+    const adminModal = document.getElementById('adminModal');
+    
+    document.getElementById('openAdminModalBtn').addEventListener('click', () => {
+        adminModal.classList.add('active');
+        document.getElementById('adminPasswordInput').value = "";
+        document.getElementById('adminErrorMsg').innerText = "";
+    });
+
+    document.getElementById('closeAdminModalBtn').addEventListener('click', () => {
+        adminModal.classList.remove('active');
+    });
+
+    document.getElementById('submitAdminPasswordBtn').addEventListener('click', () => {
+        const password = document.getElementById('adminPasswordInput').value;
+        
+        // Code d'accès Admin sécurisé
+        if (password === "addidi98424751") {
+            adminModal.classList.remove('active');
+            // Synchronise l'input de configuration avec le code actuel
+            document.getElementById('adminStudentCodeConfig').value = currentStudentAccessCode;
+            changeSection('adminDashboard');
+        } else {
+            document.getElementById('adminErrorMsg').innerText = "❌ Mot de passe incorrect.";
+        }
+    });
+
+    document.getElementById('logoutAdminBtn').addEventListener('click', () => {
+        document.getElementById('adminVideoPlayer').pause(); // Coupe le lecteur admin à la fermeture
+        changeSection('home');
+    });
+
+    // Mettre à jour dynamiquement le code d'accès des étudiants
+    document.getElementById('saveStudentCodeBtn').addEventListener('click', () => {
+        const newCode = document.getElementById('adminStudentCodeConfig').value;
+        if(newCode.trim() !== "") {
+            currentStudentAccessCode = newCode.trim();
+            alert(`Le code d'accès pour les étudiants a été modifié ! Code actuel : ${currentStudentAccessCode}`);
+        } else {
+            alert("Le code ne peut pas être vide.");
+        }
+    });
+
+    function updateAdminStudentsList() {
+        const listContainer = document.getElementById('adminStudentsList');
+        if (registeredStudents.length === 0) {
+            listContainer.innerHTML = `<p style="color: #64748b; font-style: italic;">Aucun étudiant enregistré pour le moment.</p>`;
+            return;
+        }
+        listContainer.innerHTML = "";
+        registeredStudents.forEach((student) => {
+            const item = document.createElement('div');
+            item.style.cssText = "background: white; padding: 0.8rem; border-radius: 8px; border-left: 4px solid #ef4444; font-size: 0.9rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);";
+            item.innerHTML = `
+                <strong>${student.name}</strong><br>
+                <span style="color:#64748b;"><i class="fas fa-envelope"></i> ${student.email}</span><br>
+                <span style="color:#64748b;"><i class="fas fa-phone"></i> ${student.phone}</span>
+            `;
+            listContainer.appendChild(item);
+        });
+    }
+
+    document.getElementById('clearForumBtn').addEventListener('click', () => {
+        if(confirm("Voulez-vous vraiment vider tous les messages utilisateur du forum ?")) {
+            const container = document.getElementById('forumThreadsContainer');
+            container.innerHTML = `
+                <div class="forum-card">
+                    <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Bienvenue sur le forum Artech !</h4>
+                    <p>Posez vos questions sur la réparation, la programmation ou la domotique. La communauté vous répondra.</p>
+                    <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Par: Administrateur</p>
+                </div>
+            `;
+            alert("Forum réinitialisé !");
+        }
+    });
+</script>
+
+</body>
+</html>
